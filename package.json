@@ -1,0 +1,52 @@
+{
+  "name": "@charpeni/pirsch-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Pirsch Analytics",
+  "license": "MIT",
+  "bin": {
+    "pirsch-mcp": "dist/src/index.js"
+  },
+  "files": [
+    "dist/src",
+    "LICENSE",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
+    "dev": "node src/index.ts",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "inspect": "pnpm build && HOST=127.0.0.1 mcp-inspector -e \"PIRSCH_CLIENT_ID=$PIRSCH_CLIENT_ID\" -e \"PIRSCH_CLIENT_SECRET=$PIRSCH_CLIENT_SECRET\" node dist/src/index.js",
+    "inspect:list": "pnpm build && mcp-inspector --cli node dist/src/index.js -- --method tools/list",
+    "lint": "oxlint src test",
+    "prepack": "pnpm check",
+    "start": "node dist/src/index.js",
+    "test": "pnpm build && node --test dist/test/*.test.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "pirsch-sdk": "2.9.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "^2.0.0",
+    "@modelcontextprotocol/inspector": "^2.0.0",
+    "@types/node": "^26.1.2",
+    "oxfmt": "^0.61.0",
+    "oxlint": "^1.76.0",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "packageManager": "pnpm@11.15.1"
+}
