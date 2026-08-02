@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",
-    "pirsch-sdk": "2.9.1",
+    "pirsch-sdk": "^2.10.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

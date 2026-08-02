@@ -12,8 +12,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       pirsch-sdk:
-        specifier: 2.9.1
-        version: 2.9.1(debug@4.4.3)
+        specifier: ^2.10.1
+        version: 2.10.1(debug@4.4.3)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -717,9 +717,6 @@ packages:
 
   '@tybys/wasm-util@0.10.3':
     resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
-
-  '@types/node@24.13.3':
-    resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
 
   '@types/node@26.1.2':
     resolution: {integrity: sha512-Vu4a5UFA9rIIFJ7rB/Vaafh9lrCQszopTCx6KjFboXTGQbPNasehVR5TEiithSDGyd1DEiUByggTZsg8jukeIg==}
@@ -1500,8 +1497,8 @@ packages:
     resolution: {integrity: sha512-8OEwKp5juEvb/MjpIc4hjqfgCNysrS94RIOMXYvpYCdm/jglrKEiAYmiumbmGhCvs+IcInsphYDFwqrjr7398w==}
     hasBin: true
 
-  pirsch-sdk@2.9.1:
-    resolution: {integrity: sha512-9h1w2PVJigKs4r6gCjf8zapU0sRdyDIcZekNjfXj3H8QJ0Rd1/PHKs/nMib/Rp1xevTmsbInEV1wUN3bmp1y1g==}
+  pirsch-sdk@2.10.1:
+    resolution: {integrity: sha512-NuzueqM2GpmB4EpeZR0V65g+5SNhOV2xYP+vAS3hHDrd/uUUteCBw3126m+fJg1V1ljJX9mLv8TAysm961LEnQ==}
 
   pkce-challenge@5.0.1:
     resolution: {integrity: sha512-wQ0b/W4Fr01qtpHlqSqspcj3EhBvimsdh0KlHhH8HRZnMsEa0ea2fTULOXOS9ccQr3om+GcGRk4e+isrZWV8qQ==}
@@ -1712,9 +1709,6 @@ packages:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
     engines: {node: '>=16.20.0'}
     hasBin: true
-
-  undici-types@7.18.2:
-    resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
   undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
@@ -2293,10 +2287,6 @@ snapshots:
     dependencies:
       tslib: 2.8.1
     optional: true
-
-  '@types/node@24.13.3':
-    dependencies:
-      undici-types: 7.18.2
 
   '@types/node@26.1.2':
     dependencies:
@@ -3008,9 +2998,9 @@ snapshots:
       sonic-boom: 4.2.1
       thread-stream: 3.2.0
 
-  pirsch-sdk@2.9.1(debug@4.4.3):
+  pirsch-sdk@2.10.1(debug@4.4.3):
     dependencies:
-      '@types/node': 24.13.3
+      '@types/node': 26.1.2
       axios: 1.19.0(debug@4.4.3)
     transitivePeerDependencies:
       - debug
@@ -3270,8 +3260,6 @@ snapshots:
       '@typescript/typescript-sunos-x64': 7.0.2
       '@typescript/typescript-win32-arm64': 7.0.2
       '@typescript/typescript-win32-x64': 7.0.2
-
-  undici-types@7.18.2: {}
 
   undici-types@8.3.0: {}
 
