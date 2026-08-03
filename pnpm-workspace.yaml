@@ -1,5 +1,3 @@
 allowBuilds:
   "@modelcontextprotocol/inspector": true
   esbuild: true
-minimumReleaseAgeExclude:
-  - pirsch-sdk@2.10.1
