@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { createServer as createHttpServer } from "node:http";
 import { createRequire } from "node:module";
+import type { AddressInfo } from "node:net";
 import test from "node:test";
 
 import { Client } from "@modelcontextprotocol/client";
@@ -84,11 +86,41 @@ test("buildPirschFilter maps MCP fields to Pirsch SDK fields", () => {
   });
 
   assert.equal(filter.id, "domain-1");
-  assert.equal(filter.from.toISOString(), "2026-07-01T00:00:00.000Z");
-  assert.equal(filter.to.toISOString(), "2026-07-31T00:00:00.000Z");
+  assert.equal(filter.from, "2026-07-01");
+  assert.equal(filter.to, "2026-07-31");
   assert.equal(filter.tz, "Europe/Berlin");
   assert.deepEqual(filter.event_meta, { plan: "pro" });
   assert.equal(filter.include_avg_time_on_page, true);
+});
+
+test("queryStatistics sends dates to the Pirsch API as YYYY-MM-DD", async () => {
+  const requests: URL[] = [];
+  const server = createHttpServer((request, response) => {
+    requests.push(new URL(request.url ?? "/", "http://127.0.0.1"));
+    response.setHeader("Content-Type", "application/json");
+    response.end(
+      request.method === "POST"
+        ? JSON.stringify({ access_token: "token-1", expires_at: "2030-01-01T00:00:00.000Z" })
+        : "[]",
+    );
+  });
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+
+  try {
+    const client = createPirschClient({
+      PIRSCH_BASE_URL: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
+      PIRSCH_CLIENT_ID: "c".repeat(32),
+      PIRSCH_CLIENT_SECRET: "s".repeat(64),
+    });
+
+    await queryStatistics(client, { ...baseQuery, metric: "visitors" });
+
+    const statistics = requests.find(({ pathname }) => pathname.endsWith("/statistics/visitor"));
+    assert.equal(statistics?.searchParams.get("from"), "2026-07-01");
+    assert.equal(statistics?.searchParams.get("to"), "2026-07-31");
+  } finally {
+    server.close();
+  }
 });
 
 test("queryStatistics requires an explicit or configured domain ID", async () => {
