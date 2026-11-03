@@ -200,14 +200,22 @@ export async function queryStatistics(
 
   const filter = buildPirschFilter(domainId, query);
 
-  return metricHandlers[query.metric](client, filter);
+  // pirsch-sdk forwards the filter to axios as query parameters, so date strings reach the API unchanged.
+  return metricHandlers[query.metric](client, filter as unknown as PirschFilter);
 }
 
-export function buildPirschFilter(domainId: string, query: StatisticsQuery): PirschFilter {
+/**
+ * A Pirsch filter whose dates stay `YYYY-MM-DD` strings. pirsch-sdk types `from` and `to` as `Date`,
+ * but axios serializes a `Date` as an ISO timestamp, which the Pirsch API ignores, falling back to its
+ * default range of about the last week.
+ */
+export type StatisticsFilter = Omit<PirschFilter, "from" | "to"> & { from: string; to: string };
+
+export function buildPirschFilter(domainId: string, query: StatisticsQuery): StatisticsFilter {
   return {
     id: domainId,
-    from: new Date(`${query.from}T00:00:00.000Z`),
-    to: new Date(`${query.to}T00:00:00.000Z`),
+    from: query.from,
+    to: query.to,
     start: query.start,
     scale: query.scale,
     tz: query.timezone,
